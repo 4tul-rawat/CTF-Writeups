@@ -26,6 +26,9 @@ Here comes the role of BurpSuite. Burpsuite is a tool that is utilized for inter
 
 Let’s open Burpsuite now and intercept the request associated with the update feature. Here I am trying the change the email address to some random email address(in a real scenario, this can be an attacker’s email).
 
+![image](https://github.com/4tul-rawat/Writeups/assets/130515502/b1b97f42-a8d5-43f2-90fe-1a5d0ac30e18)
+
+
 
 As you capture the request in the Burpsuite, you will notice that the browser or client sends a post request with two parameters in the body of the request — an email and a csrf token. A csrf token is one way to check if the request is coming from an authenticated user and is widely used to check the authenticity of any action.
 
@@ -33,14 +36,26 @@ Let’s send this request to the repeater(Ctrl+R) and make some modifications to
 
 Let’s try to capture the response by removing the value in the csrf token. Once you do that, you will see the response as “invalid csrf token”.
 
+![image](https://github.com/4tul-rawat/Writeups/assets/130515502/acdf1f40-60ba-4a0b-888d-f0620389177a)
+
+
 
 Now, let’s try to send an empty csrf token. Once again, it shows “invalid csrf token”.
+
+![image](https://github.com/4tul-rawat/Writeups/assets/130515502/29a4031d-5a1f-461d-816c-a7df045ea1a1)
+
 
 
 What about modifying a csrf token value? Let’s try that. It didn’t work either.
 
+![image](https://github.com/4tul-rawat/Writeups/assets/130515502/4739a521-1846-4c2f-9d56-769899ccfbb8)
+
+
 
 Let’s try one more time and this time, I am completely removing the csrf token as if it never exists. Amazing, it worked! We got 200 okay response. I can see the modified email on the response page.
+
+![image](https://github.com/4tul-rawat/Writeups/assets/130515502/5c228ef6-d559-4a12-a379-e021c2270316)
+
 
 
 So what exactly is happening? Let’s understand this. In this case, the server is checking two cases, 1) Either the token has to be valid or 2) in the absence of a token, the server is not checking for one at all. We can leverage this to create a csrf poc and exploit this functionality.
@@ -49,6 +64,9 @@ Let’s create a proof-of-concept now. I am also learning so I try to create pro
 
 Once you create the proof-of-concept, open the exploit server and paste your proof-of-concept in the body section. Click on “Store” and then “View Exploit”. If the email changes, then your proof-of-concept is working as expected. Now, you can choose the option “Deliver Exploit to Victim”.
 
+![image](https://github.com/4tul-rawat/Writeups/assets/130515502/338bf0dd-4f11-43d6-a935-d5595c913b94)
+
+![image](https://github.com/4tul-rawat/Writeups/assets/130515502/27791002-1fb0-4b8c-8b19-ad2c0699a539)
 
 
 This is my first medium post and I would appreciate any feedback that would help me improve my content or suggestions for any next topic that you want to learn.
